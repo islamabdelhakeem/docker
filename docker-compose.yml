@@ -1,0 +1,22 @@
+version: '3.8'
+services:
+  web:
+    # Specify the image name you want to use
+    image: image-web:latest
+    container_name: my-app-container
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    ports:
+      - '${PORT:-3000}:3000'
+    volumes:
+      - .:/app
+      - /app/node_modules
+  tests:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - .:/app
+      - /app/node_modules
+    command: ["npm","run","test"]
